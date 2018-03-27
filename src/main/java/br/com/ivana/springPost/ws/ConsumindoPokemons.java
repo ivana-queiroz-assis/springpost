@@ -13,10 +13,15 @@ import org.springframework.web.client.RestTemplate;
 
 import br.com.ivana.springPost.model.Pokedex;
 import br.com.ivana.springPost.model.Pokemon;
+import br.com.ivana.springPost.repository.PokedexRepository;
+import br.com.ivana.springPost.repository.PokemonRepository;
 
 @Component
 public class ConsumindoPokemons implements CommandLineRunner {
-
+	
+	private static PokedexRepository repo; 
+	private static PokemonRepository repoPokemon;
+	
 	private static void getAllPokemon() {
 
 		RestTemplate r = new RestTemplate();
@@ -28,7 +33,17 @@ public class ConsumindoPokemons implements CommandLineRunner {
 
 		ResponseEntity<Pokedex> response = r.exchange("https://pokeapi.co/api/v2/pokemon/", HttpMethod.GET, entity,
 				Pokedex.class);
-
+		System.out.println(response.getBody().toString());
+		Pokedex p= response.getBody();
+		p.setId(1);
+		int i=0;
+		for(Pokemon p1:p.getResults()) {
+			p1.setId(i);
+			System.out.println(p1.getId());			
+			p1.setPokedex(p);
+			repoPokemon.save(p1);
+			i++;
+		}
 		
 		
 	}

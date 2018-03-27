@@ -3,13 +3,10 @@ package br.com.ivana.springPost.repository;
 import org.springframework.data.repository.CrudRepository;
 
 import br.com.ivana.springPost.model.Pokedex;
-import br.com.ivana.springPost.model.Pokemon;
 
+public interface PokedexRepository extends CrudRepository<Pokedex,Integer>{
 
-
-public interface PokemonRepository extends CrudRepository<Pokemon,Integer>{
-
-	Pokemon findById(int id);
+	Pokedex findById(int id);
 
 	
 	

@@ -1,10 +1,13 @@
 package br.com.ivana.springPost.model;
 
-import java.util.Arrays;
+
+
+import java.io.Serializable;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
@@ -12,13 +15,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 @Entity
-public class Pokedex {
+public class Pokedex implements Serializable{
 
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	@Id
-	@GeneratedValue
-	private long id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
 	private Integer count;
-	private String previous;	
+		
 	@Embedded
 	@OneToMany
 	@OrderColumn
@@ -31,7 +40,7 @@ public class Pokedex {
 	}
 	@Override
 	public String toString() {
-		return "Pokedex [count=" + count + ", previous=" + previous + ", results=" + getResults()[0].toString()+ "]";
+		return "Pokedex [count=" + count + ", previous="  + ", results=" + getResults()[0].toString()+ "]";
 	}
 	public void setResults(Pokemon[] results) {
 		this.results = results;
@@ -45,17 +54,13 @@ public class Pokedex {
 	public Pokedex() {
 		super();
 	}
-	public Pokedex(Integer count, String previous, Pokemon[] results) {
+	public Pokedex(Integer count,  Pokemon[] results) {
 		super();
 		this.count = count;
-		this.previous = previous;
+		
 		this.results = results;
 	}
 	
-	public String getPrevious() {
-		return previous;
-	}
-	public void setPrevious(String previous) {
-		this.previous = previous;
-	}
+	
+	
 }
